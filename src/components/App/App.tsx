@@ -35,21 +35,21 @@
 // }
 ////////////////////////////////////////////
 
-import OrderForm from '../OrderForm/OrderForm';
+// import OrderForm from '../OrderForm/OrderForm';
 
-export default function App() {
-  const handleOrder = (data: string) => {
-    console.log('Order received from', data);
-    // можна зберегти замовлення, викликати API, показати повідомлення тощо
-  };
+// export default function App() {
+//   const handleOrder = (data: string) => {
+//     console.log('Order received from', data);
+//     // можна зберегти замовлення, викликати API, показати повідомлення тощо
+//   };
 
-  return (
-    <>
-      <h1>Place your order</h1>
-      <OrderForm onSubmit={handleOrder} />
-    </>
-  );
-}
+//   return (
+//     <>
+//       <h1>Place your order</h1>
+//       <OrderForm onSubmit={handleOrder} />
+//     </>
+//   );
+// }
 /**
  У компоненті App ми використовуємо OrderForm і передаємо в неї пропс onSubmit, який є функцією для обробки замовлення. 
  
@@ -59,3 +59,32 @@ OrderForm не знає, що буде з даними – вона просто
 Компонент форми не залежить від того, як саме обробляються дані – це зовнішня відповідальність.
 Код стає чистішим: форма не має логіки, яку вона не повинна знати.
  */
+import axios from 'axios';
+import SearchForm from '../SearchForm/SearchForm';
+import { useState } from 'react';
+import { Article } from '../../types/articles';
+import ArticleList from '../ArticleList/ArticleList';
+
+interface ArticlesHttpResponse {
+  hits: Article[];
+}
+
+export default function App() {
+  // 1. Оголошуємо і типізуємо стан
+  const [articles, setArticles] = useState<Article[]>([]);
+
+  const handleSearch = async (topic: string) => {
+    const response = await axios.get<ArticlesHttpResponse>(
+      `https://hn.algolia.com/api/v1/search?query=${topic}`
+    );
+    // 2. Записуємо дані в стан після запиту
+    setArticles(response.data.hits);
+  };
+
+  return (
+    <>
+      <SearchForm onSubmit={handleSearch} />
+      {articles.length > 0 && <ArticleList items={articles} />}
+    </>
+  );
+}
