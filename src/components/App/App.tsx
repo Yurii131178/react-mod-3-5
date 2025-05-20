@@ -59,31 +59,48 @@ OrderForm не знає, що буде з даними – вона просто
 Компонент форми не залежить від того, як саме обробляються дані – це зовнішня відповідальність.
 Код стає чистішим: форма не має логіки, яку вона не повинна знати.
  */
-import axios from 'axios';
+// import axios from 'axios';
 import SearchForm from '../SearchForm/SearchForm';
 import { useState } from 'react';
 import { Article } from '../../types/articles';
 import ArticleList from '../ArticleList/ArticleList';
+import Loader from '../Loader/Barloader';
+// 1. Імпортуємо HTTP-функцію
+import { fetchArticles } from '../sevices/articleService';
 
-interface ArticlesHttpResponse {
-  hits: Article[];
-}
+// interface ArticlesHttpResponse {
+//   hits: Article[];
+// }
 
 export default function App() {
   // 1. Оголошуємо і типізуємо стан
   const [articles, setArticles] = useState<Article[]>([]);
+  // 1. Додаємо стан індикатора завантаження
+  const [isLoading, setIsloading] = useState(false);
+  // 1. Оголошуємо стан для обробки помилок запиту
+  const [isError, setIsError] = useState(false);
 
   const handleSearch = async (topic: string) => {
-    const response = await axios.get<ArticlesHttpResponse>(
-      `https://hn.algolia.com/api/v1/search?query=${topic}`
-    );
-    // 2. Записуємо дані в стан після запиту
-    setArticles(response.data.hits);
+    try {
+      setIsloading(true);
+      setIsError(false);
+
+      const data = await fetchArticles(topic);
+      setArticles(data);
+    } catch {
+      setIsError(true);
+    } finally {
+      // 5. Встановлюємо стан isLoading в false
+      // після будь якого результату запиту
+      setIsloading(false);
+    }
   };
 
   return (
     <>
       <SearchForm onSubmit={handleSearch} />
+      {isLoading && <Loader />}
+      {isError && <p>Whoops, something went wrong! Please try again!</p>}
       {articles.length > 0 && <ArticleList items={articles} />}
     </>
   );
