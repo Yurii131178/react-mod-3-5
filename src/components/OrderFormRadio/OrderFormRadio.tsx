@@ -9,7 +9,7 @@ interface OrderData {
   restrictions: string[];
 }
 
-export default function OrderForm() {
+export default function OrderFormRadio() {
   const fieldId = useId();
 
   const handleOrder = (formData: FormData) => {
@@ -31,12 +31,22 @@ export default function OrderForm() {
         <label htmlFor={`${fieldId}-username`} className={css.label}>
           Name
         </label>
-        <input type="text" name="username" id={`${fieldId}-username`} />
+        <input
+          className={css.input}
+          type="text"
+          name="username"
+          id={`${fieldId}-username`}
+        />
 
         <label htmlFor={`${fieldId}-email`} className={css.label}>
           Email
         </label>
-        <input type="email" name="email" id={`${fieldId}-email`} />
+        <input
+          className={css.input}
+          type="email"
+          name="email"
+          id={`${fieldId}-email`}
+        />
       </fieldset>
 
       <fieldset className={css.fieldset}>

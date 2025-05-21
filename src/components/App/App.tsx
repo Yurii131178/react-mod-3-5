@@ -3,8 +3,6 @@
 //     event.preventDefault();
 //     const form = event.currentTarget;
 
-import OrderForm from '../OrderForm/OrderForm';
-
 //     const formData = new FormData(form);
 //     const username = formData.get('username');
 //     console.log('Username:', username);
@@ -66,51 +64,51 @@ OrderForm не знає, що буде з даними – вона просто
 //==========================================================//
 // import axios from 'axios';
 //==================================///
-// import SearchForm from '../SearchForm/SearchForm';
-// import { useState } from 'react';
-// import { Article } from '../../types/articles';
-// import ArticleList from '../ArticleList/ArticleList';
-// import Loader from '../Loader/Barloader';
-// // 1. Імпортуємо HTTP-функцію
-// import { fetchArticles } from '../sevices/articleService';
+import SearchForm from '../SearchForm/SearchForm';
+import { useState } from 'react';
+import { Article } from '../../types/articles';
+import ArticleList from '../ArticleList/ArticleList';
+import Loader from '../Loader/Barloader';
+// 1. Імпортуємо HTTP-функцію
+import { fetchArticles } from '../sevices/articleService';
 
-// // interface ArticlesHttpResponse {
-// //   hits: Article[];
-// // }
-
-// export default function App() {
-//   // 1. Оголошуємо і типізуємо стан
-//   const [articles, setArticles] = useState<Article[]>([]);
-//   // 1. Додаємо стан індикатора завантаження
-//   const [isLoading, setIsloading] = useState(false);
-//   // 1. Оголошуємо стан для обробки помилок запиту
-//   const [isError, setIsError] = useState(false);
-
-//   const handleSearch = async (topic: string) => {
-//     try {
-//       setIsloading(true);
-//       setIsError(false);
-
-//       const data = await fetchArticles(topic);
-//       setArticles(data);
-//     } catch {
-//       setIsError(true);
-//     } finally {
-//       // 5. Встановлюємо стан isLoading в false
-//       // після будь якого результату запиту
-//       setIsloading(false);
-//     }
-//   };
-
-//   return (
-//     <>
-//       <SearchForm onSubmit={handleSearch} />
-//       {isLoading && <Loader />}
-//       {isError && <p>Whoops, something went wrong! Please try again!</p>}
-//       {articles.length > 0 && <ArticleList items={articles} />}
-//     </>
-//   );
+// interface ArticlesHttpResponse {
+//   hits: Article[];
 // }
+
+export default function App() {
+  // 1. Оголошуємо і типізуємо стан
+  const [articles, setArticles] = useState<Article[]>([]);
+  // 1. Додаємо стан індикатора завантаження
+  const [isLoading, setIsloading] = useState(false);
+  // 1. Оголошуємо стан для обробки помилок запиту
+  const [isError, setIsError] = useState(false);
+
+  const handleSearch = async (topic: string) => {
+    try {
+      setIsloading(true);
+      setIsError(false);
+
+      const data = await fetchArticles(topic);
+      setArticles(data);
+    } catch {
+      setIsError(true);
+    } finally {
+      // 5. Встановлюємо стан isLoading в false
+      // після будь якого результату запиту
+      setIsloading(false);
+    }
+  };
+
+  return (
+    <>
+      <SearchForm onSubmit={handleSearch} />
+      {isLoading && <Loader />}
+      {isError && <p>Whoops, something went wrong! Please try again!</p>}
+      {articles.length > 0 && <ArticleList items={articles} />}
+    </>
+  );
+}
 //=================HOOK useId==================//
 
 // import OrderForm1 from '../OrderForm1/order Form1';
@@ -126,10 +124,14 @@ OrderForm не знає, що буде з даними – вона просто
 
 //==================================//
 
-export default function App() {
-  return (
-    <>
-      <OrderFormRadio />
-    </>
-  );
-}
+// -------------OrderFormRadio-rev.-FINAL--------------//
+
+// import OrderFormRadio from '../OrderFormRadio/OrderFormRadio';
+
+// export default function App() {
+//   return (
+//     <>
+//       <OrderFormRadio />
+//     </>
+//   );
+// }
