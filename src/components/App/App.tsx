@@ -3,6 +3,8 @@
 //     event.preventDefault();
 //     const form = event.currentTarget;
 
+import OrderForm from '../OrderForm/OrderForm';
+
 //     const formData = new FormData(form);
 //     const username = formData.get('username');
 //     console.log('Username:', username);
@@ -51,16 +53,6 @@
 //   );
 // }
 
-import OrderForm1 from '../OrderForm1/order Form1';
-
-export default function App() {
-  return (
-    <div>
-      <h1>Welcome to our store!</h1>
-      <OrderForm1 />
-    </div>
-  );
-}
 /**
  У компоненті App ми використовуємо OrderForm і передаємо в неї пропс onSubmit, який є функцією для обробки замовлення. 
  
@@ -119,4 +111,25 @@ OrderForm не знає, що буде з даними – вона просто
 //     </>
 //   );
 // }
-//===================================//
+//=================HOOK useId==================//
+
+// import OrderForm1 from '../OrderForm1/order Form1';
+
+// export default function App() {
+//   return (
+//     <div>
+//       <h1>Welcome to our store!</h1>
+//       <OrderForm1 />
+//     </div>
+//   );
+// }
+
+//==================================//
+
+export default function App() {
+  return (
+    <>
+      <OrderFormRadio />
+    </>
+  );
+}
