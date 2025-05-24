@@ -135,3 +135,84 @@ export default function App() {
 //     </>
 //   );
 // }
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
+
+//==============PRACTICE==========================//
+
+// export default function App() {
+//   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+//     event.preventDefault();
+//     const form = event.currentTarget;
+
+//     const formData = new FormData(form);
+
+//     const values = Object.fromEntries(formData);
+//     //.........................................................//
+//     // ця штука створить для нас під капотом обєкт, в який ми записували властивості(fieldname) та їхні значення:
+
+//     /****************************************************
+//      * const values = {
+//       username: formData.get('username'),
+//       email: formData.get('email'),
+//     };
+//      ****************************************************/
+
+//     // Object.fromEntries(formData) - створи об'єкт з набориу записів(наш набір)
+//     // — це автоматичне створення об’єкта зі всіма полями форми. Тобто всі name="..."
+//     //.........................................................//
+//     console.log('handleSubmit', values);
+
+//     form.reset();
+//   };
+
+//   return (
+//     <form onSubmit={handleSubmit}>
+//       <input type="text" name="username" />
+//       <input type="email" name="email" />
+//       <button type="submit">Submit</button>
+//     </form>
+//   );
+// }
+//.................................................................
+// оптимізуємо ще!!! Бо це забагато коду...
+//.....................................................................
+// export default function App() { // ↓↓↓
+// const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+//   event.preventDefault();
+//   const form = event.currentTarget;
+
+//   const formData = new FormData(form);
+//   const values = Object.fromEntries(formData);
+//   console.log('handleSubmit', values);
+
+//   form.reset();
+// };
+
+/**
+ * Замість передачі onSubmit ми передамо в форму атрибут "action" і вставимо в нього наш колбек sction={handleSubmit}
+                         ↓↓↓                   */
+//...........................................................
+//   const handleSubmit = (formData: FormData) => {
+//     console.log('handleSubmit', formData);
+//     const values = Object.fromEntries(formData);
+//     console.log(values);
+//   };
+
+//   return (
+//     <form action={handleSubmit}>
+//       <input type="text" name="username" defaultValue="Mr. Хтось" />
+//       <input type="email" name="email" />
+//       <textarea name="textarea" rows={5}></textarea>
+//       <button type="submit">Submit</button>
+//     </form>
+//   );
+// }
+//................................................................
+// *ПЛЮСИ*
+// + НЕ ПЕРЕЗАВАНТАЖУЄТЬСЯ СТОРІНКА (не треба робити preventDefault();)
+// + НE ПОТРІБНО ЗбИРАТИ formData, томущо вона вже буде тут →
+// const handleSubmit = (тут буде якийсь параметрб а його типлм буде formData))б тобто НЕ ТРЕБА БРАТИ З event. currentTarget, формувати: const formData = new FormData(form). Вона робить це за нас і передає, як аргумент (formDatsa: (тип FormData))
+// + СКИДАЄ ФОРМУ
+
+// НАША ЗАДАЧА ЗАБРАТИ values вже з готової form Data

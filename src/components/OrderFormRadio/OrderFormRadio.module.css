@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 8px;
   max-width: 500px;
+  width: 100%;
   margin: 0 auto;
   padding: 24px;
   border: 1px solid #ccc;
@@ -39,6 +40,10 @@
   box-sizing: border-box;
   margin-bottom: 12px;
 }
+.input:hover {
+  border-color: #007bff;
+  background-color: #f0f8ff;
+}
 
 .textarea {
   width: 100%;
@@ -71,4 +76,9 @@
 
 .button:hover {
   background-color: #0056b3;
+}
+.option:hover {
+  background-color: #f0f8ff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
